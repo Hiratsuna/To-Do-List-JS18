@@ -1,42 +1,43 @@
-const toDoItems = document.getElementsByClassName
-("to-do-items")[0];
-const input = document.getElementById("input");
-const trashIcon = document.getElementById("trash");
+document.querySelector("#input").addEventListener("keydown", (event) => {
+  if(event.key === "Enter"){
+    const input = document.querySelector("#input");
+    addItem(input.value);
+  }
+    
+});
 
-input.addEventListener("keydown", function(event){
-    if(event.key === "Enter")
-    addItem();
-})
+document.querySelector("#add_item").addEventListener("click", () => {
+  const input = document.querySelector("#input");
+  addItem(input.value);
+});
 
-function addItem() {
-    var divParent = document.createElement("div");
-    var divChild = document.createElement("div");
-    var checkIcon = document.createElement("i");
-    var trashIcon = document.createElement("i");
+addItem = (input) => {
+  const item = document.createElement("div");
+  const div = document.createElement("div");
+  const checkIcon = document.createElement("i");
+  const trashIcon = document.createElement("i");
+  const text = document.createElement("p");
 
-    divParent.className ="item";
-    divParent.innerHTML ='<div>'+input.value+'</div>';
+  item.className = "item";
+  text.textContent = input;
 
-    checkIcon.className = "fas fa-check-square";
-    checkIcon.style.color = "lightblue";
-    checkIcon.addEventListener("click", function(){
-        checkIcon.style.color = "pink";
-    })
+  checkIcon.className = "fas fa-check-square";
+  checkIcon.style.color = "lightgray";
+  checkIcon.addEventListener("click", () => {
+    checkIcon.style.color = "limegreen";
+  })
+  div.appendChild(checkIcon);
 
-    divChild.appendChild(checkIcon);
+  trashIcon.className = "fas fa-trash";
+  trashIcon.style.color = "darkgray";
+  trashIcon.addEventListener("click", () => {
+    item.remove();
+  })
+  div.appendChild(trashIcon);
 
-    trashIcon.className = "fas fa-trash";
-    trashIcon.style.color = "darkblue";
-    trashIcon.addEventListener("click", function(){
-        divParent.remove();
-    })
+  item.appendChild(text);
+  item.appendChild(div);
 
-    divChild.appendChild(trashIcon);
-
-    divParent.appendChild(divChild);
-
-
-    toDoItems.appendChild(divParent);
-
-    input.value = '';
+  document.querySelector("#to_do_list").appendChild(item);
+  document.querySelector("#input").value = "";
 }
